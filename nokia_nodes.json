@@ -1,0 +1,10 @@
+[
+   {
+      "ip":"172.29.12.146",
+      "device_type":"alcatel_sros"
+   },
+   {
+      "ip":"172.29.12.147",
+      "device_type":"alcatel_sros"
+   }
+]

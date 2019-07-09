@@ -1,0 +1,3 @@
+show card
+show router interface
+show service service-using

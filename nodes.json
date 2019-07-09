@@ -1,0 +1,20 @@
+[
+   {
+      "ip":"172.29.12.146",
+      "device_type":"alcatel_sros",
+      "username":"admin",
+      "password":"admin"
+   },
+   {
+      "ip":"172.29.12.147",
+      "device_type":"alcatel_sros",
+      "username":"admin",
+      "password":"admin"
+   },
+   {
+      "ip":"172.29.12.148",
+      "device_type":"cisco_ios",
+      "username":"admin",
+      "password":"cisco"
+   }
+]
