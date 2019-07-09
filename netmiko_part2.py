@@ -57,7 +57,7 @@ for node in nodes:
 
         # For each command create a file under the directory with node name
         for cmd in commands:
-            out_file = cmd.replace(' ', '_').rstrip() + ".txt"
+            out_file = net_tools.command_to_filename(cmd)
             out_file = "\\".join((node_dir, out_file))
 
             # Send the command and write the output to the respective file
