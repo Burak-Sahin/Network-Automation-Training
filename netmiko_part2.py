@@ -58,12 +58,9 @@ for node in nodes:
         # For each command create a file under the directory with node name
         for cmd in commands:
             out_file = net_tools.command_to_filename(cmd)
-            out_file = "\\".join((node_dir, out_file))
+            output = connection.send_command(cmd)
+            net_tools.cmd_output_to_file(node_dir, out_file, output)
 
-            # Send the command and write the output to the respective file
-            with open(out_file, 'w+') as f:
-                output = connection.send_command(cmd)
-                f.write(output + "\n\n")
         # Close the connection to the node
         connection.disconnect()
 
