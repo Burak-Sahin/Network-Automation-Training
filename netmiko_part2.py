@@ -67,3 +67,6 @@ for node in nodes:
     # Give a proper output to the user if the connection fails and keep on
     except netmiko_exceptions as e:
         print("--> FAILURE: {}".format(node["ip"], e))
+
+    # Temporarily remove output files (comment out when done)
+    net_tools.remove_output(node_name)

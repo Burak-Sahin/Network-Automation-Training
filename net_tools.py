@@ -15,6 +15,10 @@ def get_credentials():
     return user, pwd
 
 
+def remove_output(node_dir):
+    rmtree(node_dir)
+
+
 def cmd_output_to_file(node_dir, filename, content):
     full_file_path = os.path.join(node_dir, filename)
     with open(full_file_path, 'w') as out_file:
