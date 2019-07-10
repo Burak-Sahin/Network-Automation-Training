@@ -44,7 +44,7 @@ for node in nodes:
         print("Connecting to the node -> {}".format(node["ip"]))
 
         # Create the connection to the node
-        connection = netmiko.Netmiko(**node)
+        connection = netmiko.ConnectHandler(**node)
 
         # Get the node name using base_prompt property of the ConnectionHandler
         # In Nokia routers, this will give us a string like "A:SR1"
