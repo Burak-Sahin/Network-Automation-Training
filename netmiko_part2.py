@@ -8,21 +8,10 @@ import sys        # Enabling us to utilize arguments to the script
 # Get username and password variables from the user
 login, password = net_tools.get_credentials()
 
-# Extract the file extension
-node_file_extension = sys.argv[1].split('.')[-1]
-# Based on file extension, process the node list
-nodes = list()
+# Use 1st argument to the script to get json file with list of NEs
+# This will give us a list of NEs (each as a dictionary)
 with open(sys.argv[1]) as node_file:
-    if node_file_extension == "json":
-        nodes = json.load(node_file)
-    elif node_file_extension in ("txt", "csv"):
-        node_list = node_file.readlines()
-        for node in node_list:
-            node = node.strip().split(",")
-            node = {'ip': node[0],
-                    'device_type': node[1]
-                    }
-            nodes.append(node)
+    nodes = json.load(node_file)
 
 # Use 2nd argument to the script to get the file with list of show commands
 with open(sys.argv[2]) as cmd_file:
@@ -57,7 +46,7 @@ for node in nodes:
 
         # For each command create a file under the directory with node name
         for cmd in commands:
-            out_file = net_tools.command_to_filename(cmd)
+            out_file = cmd.replace(' ', '_').rstrip() + ".txt"
             out_file = "\\".join((node_dir, out_file))
 
             # Send the command and write the output to the respective file
