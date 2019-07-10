@@ -1,0 +1,13 @@
+exit all
+configure service vprn 10002 customer 1 create
+no shutdown
+bgp
+description "test"
+exit
+interface "test" create
+sap lag-1:1024.556 create
+exit
+exit
+bgp
+no shutdown
+exit

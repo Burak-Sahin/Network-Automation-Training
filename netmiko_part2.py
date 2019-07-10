@@ -51,25 +51,15 @@ for node in nodes:
         if not os.path.exists(node_dir):
             os.mkdir(node_dir)
 
-        # For each command create a file under the directory with node name
-        cmd = "show service service-using | match VPRN"
-        vprn_lines = connection.send_command(cmd)
-        # Since the output is a string, we convert it into list of lines
-        vprn_lines = vprn_lines.strip().split("\n")
-        print(vprn_lines)
-        # Then, for each line, get the VRPN ID and append to a list
-        vprn_list = []
-        for vprn_line in vprn_lines:
-            vprn_list.append(vprn_line.strip().split()[0])
-
-        # For each VPRN ID, run route-table command and write it to a file
-        for vprn_id in vprn_list:
-            cmd = "show router " + vprn_id + " route_table"
-            output = connection.send_command(cmd)
-
-            # Write to a file for logging
-            out_file = net_tools.command_to_filename(cmd)
-            net_tools.cmd_output_to_file(node_dir, out_file, output)
+        with open('nokia_config_cmds.txt') as f:
+            tmp_lines = f.readlines()
+            lines = list()
+            for line in tmp_lines:
+                line = line.strip()
+                lines.append(line)
+        print(lines)
+        output = connection.send_config_set(lines)
+        print(output)
 
         # Close the connection to the node
         connection.disconnect()
