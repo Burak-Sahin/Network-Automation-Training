@@ -12,7 +12,3 @@ def get_credentials():
             print("Passwords do not match. Try again.")
             pwd = None
     return user, pwd
-
-
-def command_to_filename(cmd):
-    return cmd.rstrip().replace(' ', '_') + '.txt'
