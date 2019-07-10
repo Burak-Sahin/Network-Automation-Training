@@ -24,10 +24,6 @@ with open(sys.argv[1]) as node_file:
                     }
             nodes.append(node)
 
-# Use 2nd argument to the script to get the file with list of show commands
-with open(sys.argv[2]) as cmd_file:
-    commands = cmd_file.readlines()
-
 # Create a tuple of exceptions
 netmiko_exceptions = (netmiko.ssh_exception.NetMikoAuthenticationException,
                       netmiko.ssh_exception.NetMikoTimeoutException)
@@ -56,9 +52,23 @@ for node in nodes:
             os.mkdir(node_dir)
 
         # For each command create a file under the directory with node name
-        for cmd in commands:
-            out_file = net_tools.command_to_filename(cmd)
+        cmd = "show service service-using | match VPRN"
+        vprn_lines = connection.send_command(cmd)
+        # Since the output is a string, we convert it into list of lines
+        vprn_lines = vprn_lines.strip().split("\n")
+        print(vprn_lines)
+        # Then, for each line, get the VRPN ID and append to a list
+        vprn_list = []
+        for vprn_line in vprn_lines:
+            vprn_list.append(vprn_line.strip().split()[0])
+
+        # For each VPRN ID, run route-table command and write it to a file
+        for vprn_id in vprn_list:
+            cmd = "show router " + vprn_id + " route_table"
             output = connection.send_command(cmd)
+
+            # Write to a file for logging
+            out_file = net_tools.command_to_filename(cmd)
             net_tools.cmd_output_to_file(node_dir, out_file, output)
 
         # Close the connection to the node
@@ -69,4 +79,4 @@ for node in nodes:
         print("--> FAILURE: {}".format(node["ip"], e))
 
     # Temporarily remove output files (comment out when done)
-    net_tools.remove_output(node_name)
+    #net_tools.remove_output(node_name)
